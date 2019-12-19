@@ -11,8 +11,7 @@ jobs:
       - checkout
       - run: sudo npm install -g npm
       - run: npm install
-      - run: sudo apt-get update && sudo apt-get install sshpass
-      - run: rm -rf ~/.ssh/known_hosts
+      # - run: sudo apt-get update && sudo apt-get install sshpass
       - save_cache:
           key: node_modules
           paths:
@@ -22,15 +21,15 @@ jobs:
       - restore_cache:
           keys:
             - node_modules
-      # - add_ssh_keys:
-      #     fingerprints:
-      #       - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
+      - add_ssh_keys:
+          fingerprints:
+            - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
 
       - deploy:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              sshpass -p $SERVER_KEY scp -r ./adist root@47.104.180.119:/www/wwwroot/              
+              scp -r ./adist root@47.104.180.119:/www/wwwroot/              
             else
               echo "Not master branch, dry run only"
             fi
