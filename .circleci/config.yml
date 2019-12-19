@@ -7,8 +7,11 @@ jobs:
       branches:
         only: master
     working_directory: ~/wisdomKeep
+    
     steps:
       - checkout
+       - restore_cache:
+          keys: node_modules
       - run: sudo npm install -g npm
       - run: npm install
       # - run: sudo apt-get update && sudo apt-get install sshpass
@@ -18,9 +21,7 @@ jobs:
             - node_modules
       - run: npm run build
       # 部署开始
-      - restore_cache:
-          keys:
-            - node_modules
+     
       - add_ssh_keys:
           fingerprints:
             - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
@@ -29,12 +30,11 @@ jobs:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              scp -r ./adist root@121.43.162.95:/www/wwwroot/              
+              scp -r ./adist root@121.43.162.95:/www/wwwroot/           
             else
               echo "Not master branch, dry run only"
             fi
       - run: echo '部署完毕'
-
 workflows:
   version: 2
   build-deploy:
