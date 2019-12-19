@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
+    filters:
+      branches:
+        only: master
     working_directory: ~/wisdomKeep
     steps:
       - checkout
@@ -32,8 +35,8 @@ jobs:
             fi
       - run: echo '部署完毕'
 
-
 workflows:
   version: 2
+  build-deploy:
     jobs:
       - build
