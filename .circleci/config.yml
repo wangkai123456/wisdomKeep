@@ -21,15 +21,14 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies
-      - add_ssh_keys:
-          fingerprints:
-            - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
-      - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
       - deploy:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              sudo scp -r ./adist root@47.104.180.119:/www/wwwroot/              
+              sudo sshpass -p $SERVER_KEY scp -r ./adist root@47.104.180.119:/www/wwwroot/              
             else
               echo "Not master branch, dry run only"
             fi
