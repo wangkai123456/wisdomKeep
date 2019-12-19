@@ -13,7 +13,7 @@ jobs:
           paths:
             - node_modules
       - run: npm run build
-      - run: echo '部署开始'
+      # 部署开始
       - run: sudo apt-get update && sudo apt-get install rsync
       - restore_cache:
           keys:
@@ -27,7 +27,7 @@ jobs:
           name: deploy
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
-              rsync -avce ssh build $SSH_USER@$SSH_IP:/www/wwwroot/
+              sshpass -p $SERVER_KEY scp -i  ./adist root@47.104.180.119:/www/wwwroot/              
             else
               echo "Not master branch, dry run only"
             fi
