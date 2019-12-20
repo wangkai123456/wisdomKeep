@@ -25,7 +25,7 @@ jobs:
       #     fingerprints:
       #       - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
       # - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
-      - run: sshpass -p $SERVER_KEY scp -r ./adist root@121.43.162.95:/www/wwwroot/
+      - run: sshpass -p Jlzh9310 scp -r ./adist root@121.43.162.95:/www/wwwroot/
       - run: echo '部署完毕'
 workflows:
   version: 2
