@@ -23,7 +23,7 @@ jobs:
       # 部署开始
       - add_ssh_keys:
           fingerprints:
-            - "74:85:4a:1c:7f:01:88:1b:c0:93:32:d9:fd:6c:f4:fa"
+            - "SHA256:D8w9BcbDN7bzjhLCKnd0mNSt6McXiRkYssGvNxuE0pc"
       - run: echo $REMOTE_HOSTKEY >> ~/.ssh/known_hosts
       - run: sudo scp -r ./adist root@121.43.162.95:/www/wwwroot/
       - run: echo '部署完毕'
